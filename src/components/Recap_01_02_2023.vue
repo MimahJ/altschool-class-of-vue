@@ -14,9 +14,61 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { ref, computed, watch } from "vue";
+
 import Color from "./Color.vue";
-export default {
+
+const name = "Hello World";
+const selectedColor = ref("No color selected..");
+const colors = ["red", "blue", "green", "yellow", "pink", "black", "gold"];
+
+const filteredColors = computed(() => {
+  return colors.filter((item) =>
+    item.toLowerCase().includes(searchValue.value.toLowerCase())
+  );
+});
+
+const searchValue = ref("");
+
+const filterString = () => {
+  // loop through the colors
+  // get color
+  // do check to confirm if searchvalue is in the currentColor
+
+  const newArray = [];
+
+  if (searchValue.value.length === 0) {
+    return colors;
+  }
+
+  for (let index = 0; index < colors.length; index++) {
+    const color = colors[index];
+
+    // check if the color is included in the searchValue
+    let condition = color
+      .toLowerCase()
+      .includes(searchValue.value.toLowerCase());
+
+    if (condition) {
+      newArray.push(color);
+    }
+  }
+
+  return newArray;
+};
+
+watch(searchValue, () => {
+  filteredColors.value = colors.filter((item) =>
+    item.toLowerCase().includes(searchValue.value.toLowerCase())
+  );
+});
+
+const getGreeting = () => {
+  return "Hello guys";
+};
+
+/* export default {
   name: "Recap_01_02_2023",
   components: { Color },
   data() {
@@ -83,7 +135,5 @@ export default {
       return "Hello guys";
     },
   },
-};
+}; */
 </script>
-
-<style></style>
